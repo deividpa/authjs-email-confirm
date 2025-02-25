@@ -25,39 +25,42 @@ const FormLogin = () => {
   }
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="max-w-md mx-auto p-4 space-y-6">
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Email</FormLabel>
-              <FormControl>
-                <Input placeholder="Ingresa tu email" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="password"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Contraseña</FormLabel>
-              <FormControl>
-                <Input placeholder="Ingresa tu contraseña" type="password" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Button type="submit" className="w-full">
-          Iniciar Sesión
-        </Button>
-      </form>
-    </Form>
+    <div>
+      <h1 className="text-3xl font-bold mb-4 text-slate-600">Login</h1>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="max-w-xl mx-auto p-10 space-y-6 rounded-xl border-2 border-slate-950">
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+          <FormLabel>Email</FormLabel>
+          <FormControl>
+            <Input placeholder="Ingresa tu email" {...field} />
+          </FormControl>
+          <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+          <FormLabel>Contraseña</FormLabel>
+          <FormControl>
+            <Input placeholder="Ingresa tu contraseña" type="password" {...field} />
+          </FormControl>
+          <FormMessage />
+              </FormItem>
+            )}
+          />
+          <Button type="submit" className="w-full">
+            Iniciar Sesión
+          </Button>
+        </form>
+      </Form>
+    </div>
   )
 }
 
