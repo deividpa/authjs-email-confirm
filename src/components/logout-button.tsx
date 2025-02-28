@@ -6,7 +6,9 @@ import { ArrowRightEndOnRectangleIcon } from '@heroicons/react/24/outline'
 const LogoutButton = () => {
 
   const handleClick = async () => {
-    await signOut();
+    await signOut({
+      "redirectTo": "/login",
+    });
   }
 
   return (
