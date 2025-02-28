@@ -1,7 +1,25 @@
 import type { NextAuthConfig } from "next-auth";
+import Credentials from "next-auth/providers/credentials"
 
 const authConfig: NextAuthConfig = {
-  providers: [],
+  providers: [
+    Credentials({
+      authorize: async (credentials) => {
+        console.log({credentials});
+
+        if(credentials.email !== "test@test.com") {
+          throw new Error("Invalid email");
+        }
+
+        // return user object with their profile data
+        return {
+          id: "1",
+          name: "John Doe",
+          email: "test@test.com"
+        }
+      },
+    }),
+  ],
   secret: process.env.AUTH_SECRET,
   callbacks: {
     async session({ session, token }) {
