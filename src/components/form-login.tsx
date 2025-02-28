@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { loginSchema } from '@/lib/zod'
+import { loginAction } from '../../actions/auth-action';
 
 type LoginFormInputs = z.infer<typeof loginSchema>
 
@@ -20,8 +21,8 @@ const FormLogin = () => {
     }
   })
 
-  const onSubmit = (data: LoginFormInputs) => {
-    console.log(data)
+  async function onSubmit(data: LoginFormInputs) {
+    await loginAction(data)
   }
 
   return (
