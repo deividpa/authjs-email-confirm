@@ -1,7 +1,8 @@
 "use client";
 
-import React from 'react'
+import React, { useState, useTransition } from 'react'
 import { useForm } from 'react-hook-form'
+import { useRouter } from 'next/navigation';
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button } from '@/components/ui/button'
@@ -13,6 +14,11 @@ import { loginAction } from '../../actions/auth-action';
 type LoginFormInputs = z.infer<typeof loginSchema>
 
 const FormLogin = () => {
+
+  const [error, setError] = useState<string | null>(null);
+  const [isPending, startTransition] = useTransition();
+  const router = useRouter();
+
   const form = useForm<LoginFormInputs>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -22,7 +28,17 @@ const FormLogin = () => {
   })
 
   async function onSubmit(data: LoginFormInputs) {
-    await loginAction(data)
+    setError(null);
+    startTransition(async() => {
+      const response = await loginAction(data);
+      console.log(response);
+      if(response.error) {
+        setError(response.error);
+      } else {
+        setError(null);
+        router.push('/dashboard');
+      }
+    });
   }
 
   return (
@@ -56,7 +72,10 @@ const FormLogin = () => {
               </FormItem>
             )}
           />
-          <Button type="submit" className="w-full">
+          {
+            error && <FormMessage>{error}</FormMessage>
+          }
+          <Button type="submit" className="w-full" disabled={isPending}>
             Iniciar Sesión
           </Button>
         </form>
