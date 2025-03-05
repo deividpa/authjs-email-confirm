@@ -4,6 +4,7 @@ import { loginSchema } from "./lib/zod";
 import { prisma } from "./lib/prisma";
 import bcrypt from "bcryptjs";
 import { nanoid } from "nanoid";
+import { sendVerificationEmail } from "./lib/mail";
 
 const authConfig: NextAuthConfig = {
   providers: [
@@ -62,6 +63,12 @@ const authConfig: NextAuthConfig = {
               expires: new Date(Date.now() + 1000 * 60 * 60 * 24), // 24 hours
             },
           });
+
+          // Send verification email
+          await sendVerificationEmail(user.email, token);
+
+          // Show an error message if the email is not verified
+          throw new Error("Email not verified");
 
         }
 
