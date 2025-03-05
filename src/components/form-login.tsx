@@ -13,7 +13,11 @@ import { loginAction } from '../../actions/auth-action';
 
 type LoginFormInputs = z.infer<typeof loginSchema>
 
-const FormLogin = () => {
+const FormLogin = ({
+  isVerified
+}: {
+  isVerified: boolean
+}) => {
 
   const [error, setError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
@@ -44,6 +48,9 @@ const FormLogin = () => {
   return (
     <div>
       <h1 className="text-3xl font-bold mb-4 text-slate-600">Login</h1>
+      {
+        isVerified && <p className="text-green-500">Tu email ha sido verificado exitosamente</p>
+      }
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="max-w-xl mx-auto p-10 space-y-6 rounded-xl border-2 border-slate-950">
           <FormField
